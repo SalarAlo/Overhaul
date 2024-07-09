@@ -1820,7 +1820,6 @@ MonoBehaviour:
   - {fileID: 1557290198}
   - {fileID: 439836971}
   - {fileID: 1610343903}
-  testSO: {fileID: 11400000, guid: cf08db24819f32646a0b66962b44024a, type: 2}
   stackLimit: 6
 --- !u!4 &1916279802
 Transform:
