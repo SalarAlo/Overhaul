@@ -10,6 +10,7 @@ public class InventorySystem : Singleton<InventorySystem>
     [SerializeField] private List<InventorySlot> inventorySlots;
     private Dictionary<InventorySlot, InventoryItem> itemSlotDictionary;
     [SerializeField] private int stackLimit;
+    [SerializeField] private InventoryItemSO inventoryItemSO;
     private int originalStackLimit;
 
     public override void Awake() {
@@ -22,7 +23,8 @@ public class InventorySystem : Singleton<InventorySystem>
     }
 
     public bool TryAddItem(InventoryItemSO inventoryItemSO, int amount) {
-        stackLimit = inventoryItemSO.isStackable ? 1 : stackLimit; 
+        stackLimit = !inventoryItemSO.isStackable ? 1 : stackLimit; 
+
         if (!CanAddItem(inventoryItemSO, amount)) {
             stackLimit = originalStackLimit;
             return false;
@@ -98,6 +100,10 @@ public class InventorySystem : Singleton<InventorySystem>
 
     public InventoryItem GetItemOnSlot(InventorySlot inventorySlot) {
         return itemSlotDictionary[inventorySlot];
+    }
+
+    private void Update() {
+        if(Input.GetKeyDown(KeyCode.T)) TryAddItem(inventoryItemSO);
     }
 }
 

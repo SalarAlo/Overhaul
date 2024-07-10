@@ -1,18 +1,19 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class TileObject : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+    public enum TileType {
+        Grass,
+        Soil,
+        Other,
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    [SerializeField] private TileType tileType;
+
+    public void SetTile(TileType tileType){
+        this.tileType = tileType;
     }
 }
