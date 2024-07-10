@@ -9,5 +9,6 @@ public abstract class ItemModeUsable : ItemUsable
     }
 
     protected abstract void DefineOnClickUsable();
+    
     public abstract void ModeEnabled();
 }

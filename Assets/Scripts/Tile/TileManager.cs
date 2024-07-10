@@ -1,7 +1,8 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TileManager : MonoBehaviour
+public class TileManager : Singleton<TileManager>
 {
     [SerializeField] private int sizeX;
     [SerializeField] private int sizeY;
@@ -10,11 +11,20 @@ public class TileManager : MonoBehaviour
     [SerializeField] private TileObject tileObjectPrefab;
     private TileObject[,] tileObjects;
 
+    [SerializeField] private Soil soilPrefab;
+    [SerializeField] private Grass grassPrefab;
 
-    private void Awake() {
+
+    public override void Awake() {
+        base.Awake();
         tileObjects = new TileObject[sizeY, sizeX];
 
         PopulateTileObjectArray();
+    }
+
+    public void ReplaceTile(int x, int y, TileObject newTileObj) {
+        Destroy(tileObjects[x,y].gameObject);
+        tileObjects[x, y] = newTileObj;
     }
 
     private void PopulateTileObjectArray() {
@@ -26,4 +36,7 @@ public class TileManager : MonoBehaviour
             }
         }
     }
+
+    public Soil GetSoilPrefab() => soilPrefab;
+    public Grass GetGrass() => grassPrefab;
 }

@@ -1,19 +1,15 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class TileObject : MonoBehaviour
+[RequireComponent(typeof(BoxCollider))]
+public abstract class TileObject : MonoBehaviour
 {
-    public enum TileType {
-        Grass,
-        Soil,
-        Other,
+    protected Vector2Int localCoordinates; 
+
+    public void Initialize(int x, int y) {
+        localCoordinates = new (x, y);
     }
 
-    [SerializeField] private TileType tileType;
-
-    public void SetTile(TileType tileType){
-        this.tileType = tileType;
+    public void ReplaceTile(TileObject newTile) {
+        TileManager.Instance.ReplaceTile(localCoordinates.x, localCoordinates.y, newTile);
     }
 }
