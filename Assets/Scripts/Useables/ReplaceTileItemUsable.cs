@@ -3,9 +3,8 @@ using UnityEngine;
 
 public abstract class ReplaceTileItemUsable : ItemModeUsable
 {
-    public override void ModeEnabled() {
+    public override void DefineModeEnabled() {
         if(!Input.GetMouseButtonDown(0)) return;
-        Debug.Log("Click");
 
         List<TileObject> selectedTiles = SelectedTileIndicator.Instance.GetSelectedTiles();
 

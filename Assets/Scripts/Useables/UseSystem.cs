@@ -5,6 +5,7 @@ public class UseSystem : MonoBehaviour
 {
     private UsableInventoryItemSO currentUsable;
     private Action currentModeAction;
+    private ItemUsable usable;
     private bool isModeUsable;
 
     private void Start() {
@@ -13,12 +14,15 @@ public class UseSystem : MonoBehaviour
 
     private void InventorySlot_OnAnyItemUsed(UsableInventoryItemSO itemUsableSO){
         if(currentUsable == itemUsableSO) return;
+        Debug.Log("USED");
 
         currentUsable = itemUsableSO;
-        isModeUsable = itemUsableSO.CreateUsableInstance() is ItemModeUsable;
-        if(isModeUsable)
-            currentModeAction = (itemUsableSO.CreateUsableInstance() as ItemModeUsable).ModeEnabled; 
+        usable = itemUsableSO.CreateUsableInstance();
+        isModeUsable = usable is ItemModeUsable;
 
+        if(isModeUsable) {
+            currentModeAction = (usable as ItemModeUsable).ModeEnabled; 
+        }
     }
 
     private void Update() {

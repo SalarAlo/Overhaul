@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class SelectedTileIndicator : Singleton<SelectedTileIndicator>
@@ -9,7 +10,6 @@ public class SelectedTileIndicator : Singleton<SelectedTileIndicator>
     private List<TileObject> tileObjectsSelected = null;
     private SpriteRenderer spriteRenderer; 
     private Vector3 destinationPos;
-    private Vector3 tinyOffset = new(.05f, 0, .05f);
 
     public override void Awake() {
         base.Awake();
@@ -33,7 +33,11 @@ public class SelectedTileIndicator : Singleton<SelectedTileIndicator>
         transform.position = 
             Vector3.Lerp(
                 transform.position,
-                destinationPos + new Vector3((size-1)*.5f, 0f, (size-1) * .5f) + tinyOffset,
+                destinationPos + new Vector3(
+                    (size-1)*.5f, 
+                    .25f,
+                    (size-1) * .5f
+                ),
                 speed * Time.deltaTime
             );
     

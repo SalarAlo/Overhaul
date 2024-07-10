@@ -11,7 +11,7 @@ public class InventorySystem : Singleton<InventorySystem>
     [SerializeField] private List<InventorySlot> inventorySlots;
     private Dictionary<InventorySlot, InventoryItem> itemSlotDictionary;
     [SerializeField] private int stackLimit;
-    [SerializeField] private InventoryItemSO inventoryItemSO;
+    [SerializeField] private List<InventoryItemSO> inventoryItemSOs;
     private int originalStackLimit;
 
     public override void Awake() {
@@ -24,8 +24,10 @@ public class InventorySystem : Singleton<InventorySystem>
     }
 
     private IEnumerator Start() {
-        yield return new WaitForSeconds(1);
-        TryAddItem(inventoryItemSO);
+        foreach(InventoryItemSO so in inventoryItemSOs){
+            yield return new WaitForSeconds(1);
+            TryAddItem(so);
+        }
     }
 
 
