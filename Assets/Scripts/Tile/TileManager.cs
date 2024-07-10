@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Xml.Serialization;
 using UnityEngine;
 
 public class TileManager : Singleton<TileManager>
@@ -23,8 +24,9 @@ public class TileManager : Singleton<TileManager>
     }
 
     public void ReplaceTile(int x, int y, TileObject newTileObj) {
-        Destroy(tileObjects[x,y].gameObject);
-        tileObjects[x, y] = newTileObj;
+        Destroy(tileObjects[y,x].gameObject);
+        newTileObj.SetCoordinates(x, y);
+        tileObjects[y, x] = newTileObj;
     }
 
     private void PopulateTileObjectArray() {
@@ -32,11 +34,15 @@ public class TileManager : Singleton<TileManager>
             for(int x = 0; x < sizeX; x++) {
                 TileObject tileObject = Instantiate(tileObjectPrefab, new Vector3(x*tileSize, 0, y*tileSize), Quaternion.identity, transform);
                 tileObject.transform.localScale = new Vector3(tileSize, .1f, tileSize);
+                tileObject.SetCoordinates(x, y);
                 tileObjects[y, x] = tileObject;
             }
         }
     }
 
+    public TileObject GetTile(int x, int y) => tileObjects[y, x];
+    public int GetSizeX() => sizeX;
+    public int GetSizeY() => sizeY;
     public Soil GetSoilPrefab() => soilPrefab;
     public Grass GetGrass() => grassPrefab;
 }

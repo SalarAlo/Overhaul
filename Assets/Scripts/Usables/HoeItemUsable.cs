@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class HoeItemUsable : ItemModeUsable {
@@ -10,11 +11,11 @@ public class HoeItemUsable : ItemModeUsable {
         if(!Physics.Raycast(ray, out RaycastHit hit)) return;
 
         if(!hit.transform.TryGetComponent(out TileObject tileObject)) return;
-
-        
+        if(tileObject is not Grass) return;
+        tileObject.ReplaceTile(TileManager.Instance.GetSoilPrefab());
     }
 
     protected override void DefineOnClickUsable(){
-        Debug.Log("Know we're hoing");
+
     }
 }
