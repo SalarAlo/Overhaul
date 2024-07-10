@@ -514,6 +514,7 @@ MonoBehaviour:
   tileObjectPrefab: {fileID: 7139848682766136928, guid: 798bcd0b8d643ae43880d7cc015e7033, type: 3}
   soilPrefab: {fileID: -3085413585290241251, guid: dbdabc9cb8d588941887c02774224d2f, type: 3}
   grassPrefab: {fileID: 7139848682766136928, guid: 798bcd0b8d643ae43880d7cc015e7033, type: 3}
+  stonePrefab: {fileID: 2838002754875666542, guid: a6b6615b90cb6e74a888279ffb35d6db, type: 3}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -1549,9 +1550,9 @@ Transform:
   m_GameObject: {fileID: 1821777652}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0.12, z: 0}
+  m_LocalPosition: {x: 0.05, y: 0.12, z: 0.05}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 549321971}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
@@ -1620,6 +1621,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
+  size: 1
 --- !u!1001 &1914883138
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1778,7 +1780,7 @@ MonoBehaviour:
   - {fileID: 439836971}
   - {fileID: 1610343903}
   stackLimit: 6
-  inventoryItemSO: {fileID: 11400000, guid: f7b2fa71d1b15094194f5d8506eaee9c, type: 2}
+  inventoryItemSO: {fileID: 11400000, guid: ae9a9621e713e194e844534ba6616a2d, type: 2}
 --- !u!4 &1916279802
 Transform:
   m_ObjectHideFlags: 0

@@ -14,6 +14,7 @@ public class TileManager : Singleton<TileManager>
 
     [SerializeField] private Soil soilPrefab;
     [SerializeField] private Grass grassPrefab;
+    [SerializeField] private TileObject stonePrefab;
 
 
     public override void Awake() {
@@ -40,9 +41,13 @@ public class TileManager : Singleton<TileManager>
         }
     }
 
-    public TileObject GetTile(int x, int y) => tileObjects[y, x];
+    public TileObject GetTile(int x, int y)  {
+        return tileObjects[y, x];
+    }
     public int GetSizeX() => sizeX;
     public int GetSizeY() => sizeY;
     public Soil GetSoilPrefab() => soilPrefab;
-    public Grass GetGrass() => grassPrefab;
+    public Grass GetGrassPrefab() => grassPrefab;
+
+    internal TileObject GetStoneTile() => stonePrefab;
 }

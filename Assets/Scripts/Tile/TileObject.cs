@@ -1,7 +1,8 @@
+using System;
 using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider))]
-public abstract class TileObject : MonoBehaviour
+public class TileObject : MonoBehaviour
 {
     protected Vector2Int localCoordinates; 
 
@@ -13,4 +14,6 @@ public abstract class TileObject : MonoBehaviour
         TileObject tile = MonoBehaviour.Instantiate(newTilePrefab, transform.position, Quaternion.identity, transform.parent);
         TileManager.Instance.ReplaceTile(localCoordinates.x, localCoordinates.y, tile);
     }
+
+    public Vector2Int GetLocalPosition() => localCoordinates;
 }

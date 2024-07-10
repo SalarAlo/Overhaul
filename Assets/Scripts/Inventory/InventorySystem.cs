@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
@@ -21,6 +22,12 @@ public class InventorySystem : Singleton<InventorySystem>
             itemSlotDictionary.Add(inventorySlot, null);
         }
     }
+
+    private IEnumerator Start() {
+        yield return new WaitForSeconds(1);
+        TryAddItem(inventoryItemSO);
+    }
+
 
     public bool TryAddItem(InventoryItemSO inventoryItemSO, int amount) {
         stackLimit = !inventoryItemSO.isStackable ? 1 : stackLimit; 
@@ -100,10 +107,6 @@ public class InventorySystem : Singleton<InventorySystem>
 
     public InventoryItem GetItemOnSlot(InventorySlot inventorySlot) {
         return itemSlotDictionary[inventorySlot];
-    }
-
-    private void Update() {
-        if(Input.GetKeyDown(KeyCode.T)) TryAddItem(inventoryItemSO);
     }
 }
 
