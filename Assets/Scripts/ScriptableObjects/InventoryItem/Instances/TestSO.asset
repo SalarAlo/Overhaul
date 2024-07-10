@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc89a979cbb436e43aa80b7c81e8166b, type: 3}
   m_Name: TestSO
   m_EditorClassIdentifier: 
+  isStackable: 1
   sprite: {fileID: 21300000, guid: be340a165cb9c8d4cb50f1deeb51d4ea, type: 3}

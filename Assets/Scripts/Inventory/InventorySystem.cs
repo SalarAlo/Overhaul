@@ -10,9 +10,11 @@ public class InventorySystem : Singleton<InventorySystem>
     [SerializeField] private List<InventorySlot> inventorySlots;
     private Dictionary<InventorySlot, InventoryItem> itemSlotDictionary;
     [SerializeField] private int stackLimit;
+    private int originalStackLimit;
 
     public override void Awake() {
         base.Awake();
+        originalStackLimit = stackLimit;
         itemSlotDictionary = new Dictionary<InventorySlot, InventoryItem>();
         foreach(InventorySlot inventorySlot in inventorySlots) {
             itemSlotDictionary.Add(inventorySlot, null);
@@ -20,9 +22,14 @@ public class InventorySystem : Singleton<InventorySystem>
     }
 
     public bool TryAddItem(InventoryItemSO inventoryItemSO, int amount) {
-        if (!CanAddItem(inventoryItemSO, amount)) return false;
+        stackLimit = inventoryItemSO.isStackable ? 1 : stackLimit; 
+        if (!CanAddItem(inventoryItemSO, amount)) {
+            stackLimit = originalStackLimit;
+            return false;
+        }
 
         InventoryItem item = itemSlotDictionary.Values.ToList().Find(item => item != null &&  item.GetItemSO() == inventoryItemSO && item.GetAmount() < stackLimit);
+
         if(item != null) {
             int newItemAmount = item.GetAmount() + amount;
             item.SetAmount(newItemAmount);
@@ -47,12 +54,12 @@ public class InventorySystem : Singleton<InventorySystem>
             inventorySlot.UpdateSlot();
         }
 
+        stackLimit = originalStackLimit;
         return true;
     }
 
     private bool CanAddItem(InventoryItemSO inventoryItemSO, int amount = 1) {
         int avaiableSpace = 0;
-
         foreach(var item in itemSlotDictionary.Values.ToList()) {
             if (item == null) continue;
             if (item.GetItemSO() != inventoryItemSO) continue;
