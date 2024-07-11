@@ -4,7 +4,7 @@ using UnityEngine;
 public abstract class ReplaceTileItemUsable : ItemModeUsable
 {
     public override void DefineModeEnabled() {
-        if(!Input.GetMouseButtonDown(0)) return;
+        if(!Input.GetMouseButton(0)) return;
 
         List<TileObject> selectedTiles = SelectedTileIndicator.Instance.GetSelectedTiles();
 
