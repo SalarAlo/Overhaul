@@ -47,8 +47,10 @@ public abstract class RoundedTileObject<T> : TileObject where T : RoundedTileObj
             case 2:
                 if (left && right) {
                     selectedPrefab = noRoundedEdgesPrefab;
+                    rotation = Quaternion.Euler(0, 0, 0);
                 } else if (top && bottom) {
-                    selectedPrefab = noRoundedEdgesPrefab;
+                    selectedPrefab = noRoundedEdgesPrefab;                
+                    rotation = Quaternion.Euler(0, 0, 0);
                 } else {
                     selectedPrefab = oneRoundedEdgePrefab;
 

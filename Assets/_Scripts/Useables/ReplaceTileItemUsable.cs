@@ -10,9 +10,11 @@ public abstract class ReplaceTileItemUsable : ItemModeUsable
 
         foreach(TileObject tile in selectedTiles) {
             if(CanReplaceCondition(tile)) 
-                tile.ReplaceTile(GetOutcomeTile());
+                tile.ReplaceTile(GetOutcomeTile(), GetOffset());
         }
     }
+
+    protected virtual Vector3 GetOffset() => Vector3.zero; 
 
     protected override abstract void DefineOnClickUsable();
     protected abstract bool CanReplaceCondition(TileObject tileObjectToReplace);

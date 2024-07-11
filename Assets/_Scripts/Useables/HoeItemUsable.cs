@@ -16,6 +16,4 @@ public class HoeItemUsable : ReplaceTileItemUsable
     protected override TileObject GetOutcomeTile() {
         return TileManager.Instance.GetSoilPrefab();
     }
-
-    
 }
