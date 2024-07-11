@@ -9,7 +9,7 @@ public class HoeItemUsable : ReplaceTileItemUsable
         return tileObjectToReplace is Grass;
     }
 
-    protected override void DefineOnClickUsable() {
+    protected override void DefineOnModeEnabled() {
         
     }
 

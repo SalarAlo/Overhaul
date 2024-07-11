@@ -1,10 +1,10 @@
 using System;
 using UnityEngine;
 
-public class UseSystem : MonoBehaviour
+public class UseSystem : Singleton<UseSystem>
 {
-    private UsableInventoryItemSO currentUsable;
     private Action currentModeAction;
+    private UsableInventoryItemSO currentUsable;
     private ItemUsable usable;
     private bool isModeUsable;
 
@@ -14,15 +14,17 @@ public class UseSystem : MonoBehaviour
 
     private void InventorySlot_OnAnyItemUsed(UsableInventoryItemSO itemUsableSO){
         if(currentUsable == itemUsableSO) return;
-        Debug.Log("USED");
 
         currentUsable = itemUsableSO;
         usable = itemUsableSO.CreateUsableInstance();
-        isModeUsable = usable is ItemModeUsable;
 
-        if(isModeUsable) {
-            currentModeAction = (usable as ItemModeUsable).ModeEnabled; 
+        if(usable is ItemModeUsable itemModeUsable) {
+            currentModeAction = itemModeUsable.ModeEnabled; 
         }
+    }
+
+    public UsableInventoryItemSO GetUsableItemSO() {
+        return currentUsable;
     }
 
     private void Update() {

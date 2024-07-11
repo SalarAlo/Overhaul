@@ -6,13 +6,13 @@ public abstract class ItemModeUsable : ItemUsable
 
     public override void OnClick() {
         modeIsEnabled = true;
-        DefineOnClickUsable();
+        DefineOnModeEnabled();
     }
     public bool IsModeEnabled() => modeIsEnabled;
 
-    protected abstract void DefineOnClickUsable();
-    public abstract void DefineModeEnabled();
+    protected abstract void DefineOnModeEnabled();
+    public abstract void DefineDuringModeEnabled();
     public void ModeEnabled(){
-        DefineModeEnabled();
+        DefineDuringModeEnabled();
     }
 }

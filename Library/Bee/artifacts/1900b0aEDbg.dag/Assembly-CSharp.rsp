@@ -412,6 +412,7 @@
 "Assets/_Scripts/Inventory/InventorySlot.cs"
 "Assets/_Scripts/Inventory/InventorySystem.cs"
 "Assets/_Scripts/ScriptableObjects/InventoryItem/InventoryItemSO.cs"
+"Assets/_Scripts/ScriptableObjects/InventoryItem/SeedBagItemSO.cs"
 "Assets/_Scripts/ScriptableObjects/InventoryItem/UsableInventoryItemSO.cs"
 "Assets/_Scripts/Tile/AdaptiveEdgeTile.cs"
 "Assets/_Scripts/Tile/Grass.cs"
@@ -424,6 +425,7 @@
 "Assets/_Scripts/Useables/ItemModeUsable.cs"
 "Assets/_Scripts/Useables/ItemUsable.cs"
 "Assets/_Scripts/Useables/ReplaceTileItemUsable.cs"
+"Assets/_Scripts/Useables/SeedBagItemUsable.cs"
 "Assets/_Scripts/Useables/StoneItemUsable.cs"
 "Assets/_Scripts/Useables/UseSystem.cs"
 -langversion:9.0

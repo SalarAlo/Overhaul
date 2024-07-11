@@ -6,7 +6,7 @@ public class StoneItemUsable : ReplaceTileItemUsable
         return tileObjectToReplace is Grass;
     }
 
-    protected override void DefineOnClickUsable(){
+    protected override void DefineOnModeEnabled(){
     }
 
     protected override TileObject GetOutcomeTile(){

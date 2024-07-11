@@ -5,5 +5,8 @@ using UnityEngine;
 
 public class Soil : RoundedTileObject<Soil>
 {
-    
+    private SeedBagItemSO currentSeed;
+    public void PlantSeed(SeedBagItemSO seedBagItemSO) {
+        
+    }
 }
