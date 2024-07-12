@@ -14,7 +14,7 @@ public class TypeReferencePropertyDrawer : PropertyDrawer
     {
         typeOptions = AppDomain.CurrentDomain.GetAssemblies()
             .SelectMany(assembly => assembly.GetTypes())
-            .Where(t => typeof(ItemUsable).IsAssignableFrom(t) && !t.IsAbstract)
+            .Where(t => typeof(TileObject).IsAssignableFrom(t) && !t.IsAbstract)
             .Select(t => t.FullName)
             .Prepend(DropdownNoneOption)
             .ToArray();

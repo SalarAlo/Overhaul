@@ -10,11 +10,8 @@ public class InventorySlot : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI amountTextField;
     [SerializeField] private Image itemImageFrame;
-    private Button button;
+    [SerializeField] private Button button;
 
-    private void Awake() {
-        button = GetComponent<Button>();
-    }
 
     private void Start() {
         UpdateSlot();
@@ -33,7 +30,6 @@ public class InventorySlot : MonoBehaviour
 
         if (inventoryItem.GetItemSO() is UsableInventoryItemSO usableInventoryItemSO) {
             button.onClick.AddListener(() => {
-                usableInventoryItemSO.CreateUsableInstance().OnClick();
                 OnAnyItemUsed?.Invoke(usableInventoryItemSO);
             });
         }

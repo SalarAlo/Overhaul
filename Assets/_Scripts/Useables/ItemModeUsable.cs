@@ -4,15 +4,25 @@ public abstract class ItemModeUsable : ItemUsable
 {
     protected bool modeIsEnabled;
 
-    public override void OnClick() {
+    protected override void OnClick(UsableInventoryItemSO so) {
+        if(!corrospondingUsableItemSOs.Contains(so)) { 
+            modeIsEnabled = false;
+            return;
+        };
+
         modeIsEnabled = true;
-        DefineOnModeEnabled();
+        DefineOnModeEnabled(so);
     }
     public bool IsModeEnabled() => modeIsEnabled;
 
-    protected abstract void DefineOnModeEnabled();
+    protected abstract void DefineOnModeEnabled(UsableInventoryItemSO so);
     public abstract void DefineDuringModeEnabled();
-    public void ModeEnabled(){
+    public void DuringModeEnabled(){
         DefineDuringModeEnabled();
+    }
+
+    private void Update() {
+        if(!modeIsEnabled) return;
+        DuringModeEnabled();
     }
 }
