@@ -1,14 +1,11 @@
-using UnityEditor.Rendering;
 using UnityEngine;
-using UnityEngine.Rendering;
-using UnityEngine.UI;
 
 public class ProgressBarUI : MonoBehaviour
 {
     [SerializeField] private Transform progressScale;
 
     private const float MIN_FILL = .01f;
-    private const float MAX_FILL = .01f;
+    private const float MAX_FILL = 1f;
     private float counter;
     private float duration;
     private bool progressing;
@@ -16,6 +13,7 @@ public class ProgressBarUI : MonoBehaviour
     public void StartProgressing(float duration) {
         progressing = true;
         this.duration = duration;
+        counter = 0;
     }
 
     private void Update() {
@@ -28,7 +26,7 @@ public class ProgressBarUI : MonoBehaviour
 
         if(counter >= duration) {
             Destroy(gameObject);
+            progressing = false;
         }
-
     }
 }

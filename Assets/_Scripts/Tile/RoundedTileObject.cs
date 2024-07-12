@@ -68,7 +68,6 @@ public abstract class RoundedTileObject<T> : TileObject where T : RoundedTileObj
         }
 
         if (currentPrefab == selectedPrefab && currentRotation == rotation) {
-            Debug.Log("Seems like the tile doesnt need any adjustment");
             return;
         }
 

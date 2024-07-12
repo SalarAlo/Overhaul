@@ -7,16 +7,16 @@ using UnityEngine;
 public class HoeItemUsable : TimedItemUsable
 {
     List<TileObject> currentTileObjs = new List<TileObject>();
-    protected override bool CheckAdditionalCondition()
+    protected override bool ShouldCancelCounter()
     {
-        List<TileObject> tileObjects = SelectedTileIndicator.Instance.GetSelectedTiles();
+        List<TileObject> tileObjects = new List<TileObject> (SelectedTileIndicator.Instance.GetSelectedTiles());
 
-        if(!Enumerable.SequenceEqual(tileObjects, currentTileObjs)) {
+        if(!currentTileObjs.SequenceEqual(tileObjects)) {
             currentTileObjs = tileObjects;
-            return false;
+            return true;
         }
 
-        return tileObjects.Any(tile => tile is Grass); 
+        return !tileObjects.Any(tile => tile is Grass); 
     }
 
     protected override void DefineOnModeEnabled(UsableInventoryItemSO so) {
@@ -24,7 +24,11 @@ public class HoeItemUsable : TimedItemUsable
 
     protected override float GetActionDuration() {
         List<TileObject> tileObjects = SelectedTileIndicator.Instance.GetSelectedTiles();
-        return tileObjects.Aggregate(0f, (accu, item) => accu + .3f);
+        return tileObjects.Aggregate(0f, (accu, item) => { return accu + (item == null || item is not Grass ? 0 : .3f); });
+    }
+
+    protected override Vector3 GetProgressBarPos() {
+        return currentTileObjs[0].transform.position + new Vector3(0, 1, 0);
     }
 
     protected override void OnTimerFinished() {
