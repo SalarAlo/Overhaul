@@ -6,7 +6,6 @@ public class UseSystem : Singleton<UseSystem>
     private Action currentModeAction;
     private UsableInventoryItemSO currentUsable;
     private ItemUsable usable;
-    private bool isModeUsable;
 
     private void Start() {
         InventorySlot.OnAnyItemUsed += InventorySlot_OnAnyItemUsed;

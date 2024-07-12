@@ -11,6 +11,7 @@ public class SeedBagItemUsable : ItemModeUsable
         foreach(TileObject tile in selectedTiles) {
             if(tile == null) return;
             if(tile is not Soil soilTile) return;
+            if(soilTile.IsOccupied()) return;
 
             soilTile.PlantSeed(UseSystem.Instance.GetUsableItemSO() as SeedBagItemSO);
         }

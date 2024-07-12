@@ -407,6 +407,7 @@
 "Assets/TextMesh Pro/Examples & Extras/Scripts/VertexZoom.cs"
 "Assets/TextMesh Pro/Examples & Extras/Scripts/WarpTextExample.cs"
 "Assets/_Scripts/Camera/CameraSystem.cs"
+"Assets/_Scripts/General/OverhaulFormulas.cs"
 "Assets/_Scripts/General/Singleton.cs"
 "Assets/_Scripts/General/TypeReference.cs"
 "Assets/_Scripts/Inventory/InventorySlot.cs"

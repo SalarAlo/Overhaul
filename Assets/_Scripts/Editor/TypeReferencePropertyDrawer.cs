@@ -7,6 +7,18 @@ using UnityEngine;
 public class TypeReferencePropertyDrawer : PropertyDrawer
 {
     private const string DropdownNoneOption = "<None>";
+    private static string[] typeOptions;
+
+    // Static constructor to cache the type options
+    static TypeReferencePropertyDrawer()
+    {
+        typeOptions = AppDomain.CurrentDomain.GetAssemblies()
+            .SelectMany(assembly => assembly.GetTypes())
+            .Where(t => typeof(ItemUsable).IsAssignableFrom(t) && !t.IsAbstract)
+            .Select(t => t.FullName)
+            .Prepend(DropdownNoneOption)
+            .ToArray();
+    }
 
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
     {
@@ -14,14 +26,6 @@ public class TypeReferencePropertyDrawer : PropertyDrawer
         
         SerializedProperty typeNameProperty = property.FindPropertyRelative("typeName");
         string typeName = typeNameProperty.stringValue;
-        
-        // Get all types that inherit from ItemUsable
-        var typeOptions = System.AppDomain.CurrentDomain.GetAssemblies()
-            .SelectMany(assembly => assembly.GetTypes())
-            .Where(t => typeof(ItemUsable).IsAssignableFrom(t) && !t.IsAbstract)
-            .Select(t => t.FullName)
-            .Prepend(DropdownNoneOption)
-            .ToArray();
 
         int selectedIndex = Array.IndexOf(typeOptions, typeName);
         if (selectedIndex == -1) selectedIndex = 0;
