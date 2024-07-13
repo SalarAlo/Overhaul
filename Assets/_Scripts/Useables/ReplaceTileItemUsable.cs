@@ -15,7 +15,7 @@ public abstract class ReplaceTileItemUsable : ItemModeUsable
         List<TileObject> selectedTiles = SelectedTileIndicator.Instance.GetSelectedTiles();
 
         foreach(TileObject tile in selectedTiles) { 
-            if(validGroundTiles.Any(typeRef => typeRef.IsOfSameType(tile.gameObject))) continue;
+            if (validGroundTiles.Any(typeRef => typeRef.IsOfSameType(tile.gameObject))) continue;
             tile.ReplaceTile(outcomeTile);
         }
     }

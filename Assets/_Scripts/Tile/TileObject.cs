@@ -5,7 +5,6 @@ using UnityEngine;
 public class TileObject : MonoBehaviour
 {
     [SerializeField] protected Vector2Int localCoordinates; 
-    [SerializeField] private Transform visuals;
 
     public void SetCoordinates(int x, int y) {
         localCoordinates = new(x, y);

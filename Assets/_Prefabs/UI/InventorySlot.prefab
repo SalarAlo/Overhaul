@@ -350,7 +350,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   amountTextField: {fileID: 330163981726377639}
   itemImageFrame: {fileID: 2500782250568590311}
+  itemOutline: {fileID: 330163981156393771}
+  itemBackground: {fileID: 9190535324810885060}
   button: {fileID: 8003544005872234394}
+  selectedColor: {r: 1, g: 0.46787477, b: 0, a: 1}
 --- !u!1 &2410802456440763717
 GameObject:
   m_ObjectHideFlags: 0
@@ -488,7 +491,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &296906732516476434
 RectTransform:
   m_ObjectHideFlags: 0

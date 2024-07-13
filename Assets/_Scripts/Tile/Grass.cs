@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Grass : TileObject
+public class Grass : StructureTileObject
 {
-        
+    
 }

@@ -12,6 +12,6 @@ public abstract class ItemUsable : MonoBehaviour
     }
 
     private void InventorySlot_OnAnyItemUsed(UsableInventoryItemSO sO){
-        if(corrospondingUsableItemSOs.Contains(sO)) OnClick(sO);
+        OnClick(sO);
     }
 }

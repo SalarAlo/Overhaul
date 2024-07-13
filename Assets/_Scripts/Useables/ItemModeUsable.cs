@@ -6,6 +6,7 @@ public abstract class ItemModeUsable : ItemUsable
 
     protected override void OnClick(UsableInventoryItemSO so) {
         if(!corrospondingUsableItemSOs.Contains(so)) { 
+            Debug.Log("Disabling item usable with mode" + corrospondingUsableItemSOs[0].name);
             modeIsEnabled = false;
             return;
         };

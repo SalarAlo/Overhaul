@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor.Rendering;
 using UnityEngine;
 
 public class SelectedTileIndicator : Singleton<SelectedTileIndicator>
@@ -18,10 +19,13 @@ public class SelectedTileIndicator : Singleton<SelectedTileIndicator>
         SetSize(size);
     }
 
+
+
     private void SetSize(int size) { 
         this.size = size;
         spriteRenderer.size = new(size, size);
     }
+
 
     private void Update() {
         HandleSelection();
@@ -51,7 +55,8 @@ public class SelectedTileIndicator : Singleton<SelectedTileIndicator>
         if(!hitSomething) return;
 
         if(!hit.transform.TryGetComponent(out TileObject tileObject)) return;
-
+        Vector2Int coord = tileObject.GetLocalPosition();
+        if(coord.x == 0 || coord.y == 0 || coord.x >= TileManager.Instance.GetSizeX() || coord.y >= TileManager.Instance.GetSizeY()) return;
         tileObjectsSelected.Clear();
 
         for(int y = 0; y < size; y++) {
@@ -65,6 +70,6 @@ public class SelectedTileIndicator : Singleton<SelectedTileIndicator>
     }
 
     public List<TileObject> GetSelectedTiles(){
-        return tileObjectsSelected;
+        return tileObjectsSelected.Where(tile => tile != null).ToList();
     }
 }
