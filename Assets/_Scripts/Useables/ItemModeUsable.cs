@@ -1,26 +1,32 @@
+using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public abstract class ItemModeUsable : ItemUsable
 {
     protected bool modeIsEnabled;
+    protected override void Start() {
+        ModeUseableSystem.Instance.OnNewModeSelected += ModeUseableSystem_OnNewModeSelected;
+    }
 
-    protected override void OnClick(UsableInventoryItemSO so) {
-        if(!corrospondingUsableItemSOs.Contains(so)) { 
-            Debug.Log("Disabling item usable with mode" + corrospondingUsableItemSOs[0].name);
+    private void ModeUseableSystem_OnNewModeSelected(UsableInventoryItemSO So){
+        ItemModeUsable currentMode = ModeUseableSystem.Instance.GetCurrentlySelectedModeUsable();
+
+        if(currentMode == null || currentMode.GetType() != GetType()) {
+            Debug.Log("Setting mode to false");
             modeIsEnabled = false;
             return;
-        };
+        }
 
+        OnModeEnabled(So);
         modeIsEnabled = true;
-        DefineOnModeEnabled(so);
     }
-    public bool IsModeEnabled() => modeIsEnabled;
 
-    protected abstract void DefineOnModeEnabled(UsableInventoryItemSO so);
-    public abstract void DefineDuringModeEnabled();
-    public void DuringModeEnabled(){
-        DefineDuringModeEnabled();
+    protected override void OnClick(UsableInventoryItemSO so) {
     }
+
+    protected abstract void OnModeEnabled(UsableInventoryItemSO so);
+    public abstract void DuringModeEnabled();
 
     private void Update() {
         if(!modeIsEnabled) return;

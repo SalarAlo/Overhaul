@@ -5,12 +5,12 @@ using UnityEngine;
 
 public abstract class TimedItemUsable : ItemModeUsable
 {
-    public ProgressBarUI progressBarUIPrefab;
+    [SerializeField] private ProgressBarUI progressBarUIPrefab;
     protected float counter;
     private ProgressBarUI progressBarUI;
 
-    public override void DefineDuringModeEnabled(){
-        
+    public override void DuringModeEnabled(){
+        Debug.Log("still active");
         if(!Input.GetMouseButton(0) || ShouldCancelCounter()) {
             counter = 0;
             if(progressBarUI != null) Destroy(progressBarUI.gameObject);
@@ -39,5 +39,5 @@ public abstract class TimedItemUsable : ItemModeUsable
     protected abstract bool ShouldCancelCounter();
     protected abstract void OnTimerFinished();
     protected abstract float GetActionDuration();
-    protected override abstract void DefineOnModeEnabled(UsableInventoryItemSO so);
+    protected override abstract void OnModeEnabled(UsableInventoryItemSO so);
 }

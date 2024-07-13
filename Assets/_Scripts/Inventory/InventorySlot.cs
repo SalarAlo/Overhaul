@@ -16,7 +16,6 @@ public class InventorySlot : MonoBehaviour
     [SerializeField] private Button button;
     [SerializeField] private Color selectedColor;
 
-
     private void Start() {
         UpdateSlot();
         SetUnselected();
@@ -24,11 +23,8 @@ public class InventorySlot : MonoBehaviour
     }
 
     private void InventorySlot_OnAnySlotClicked(InventorySlot slot){
-        if(slot == this) {
-            SetSelected();
-        } else {
-            SetUnselected();
-        }
+        if(slot == this) SetSelected();
+        else SetUnselected();
     }
 
     public void SetSelected() {
@@ -45,6 +41,10 @@ public class InventorySlot : MonoBehaviour
         button.onClick.RemoveAllListeners();
         InventoryItem inventoryItem = InventorySystem.Instance.GetItemOnSlot(this);
 
+        button.onClick.AddListener(() => {
+            OnAnySlotClicked?.Invoke(this);
+        });
+
         if (inventoryItem == null) {
             amountTextField.text = "";
             itemImageFrame.gameObject.SetActive(false);
@@ -55,7 +55,6 @@ public class InventorySlot : MonoBehaviour
         if (inventoryItem.GetItemSO() is UsableInventoryItemSO usableInventoryItemSO) {
             button.onClick.AddListener(() => {
                 OnAnyItemUsed?.Invoke(usableInventoryItemSO);
-                OnAnySlotClicked?.Invoke(this);
             });
         }
 

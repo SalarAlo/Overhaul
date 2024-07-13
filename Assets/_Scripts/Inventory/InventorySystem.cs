@@ -8,11 +8,19 @@ using UnityEngine;
 
 public class InventorySystem : Singleton<InventorySystem>
 {
+    [Serializable]
+    public class ItemAdder {
+        public InventoryItemSO item;
+        public int amount;
+    }
+
     [SerializeField] private List<InventorySlot> inventorySlots;
-    private Dictionary<InventorySlot, InventoryItem> itemSlotDictionary;
     [SerializeField] private int stackLimit;
-    [SerializeField] private List<InventoryItemSO> inventoryItemSOs;
+    [SerializeField] private List<ItemAdder> inventoryItemSOs;
+    private Dictionary<InventorySlot, InventoryItem> itemSlotDictionary;
     private int originalStackLimit;
+    public Action<InventoryItemSO> OnAnyItemRemoved;
+    [SerializeField] private InventorySlot selectedSlot;
 
     public override void Awake() {
         base.Awake();
@@ -21,17 +29,26 @@ public class InventorySystem : Singleton<InventorySystem>
         foreach(InventorySlot inventorySlot in inventorySlots) {
             itemSlotDictionary.Add(inventorySlot, null);
         }
+        InventorySlot.OnAnySlotClicked += InventorySlot_OnAnySlotClicked;
     }
 
+    private void InventorySlot_OnAnySlotClicked(InventorySlot slot){
+        selectedSlot = slot;
+    }
+
+    public InventorySlot GetSelectedSlot() => selectedSlot;
+
     private IEnumerator Start() {
-        foreach(InventoryItemSO so in inventoryItemSOs){
-            yield return new WaitForSeconds(1);
-            TryAddItem(so);
+        yield return null;
+        foreach(var keyValuePair in inventoryItemSOs){
+            for(int i = 0; i < keyValuePair.amount; i++) {
+                yield return new WaitForSeconds(.1f);
+                TryAddItem(keyValuePair.item, 1);
+            }
         }
     }
 
-
-    public bool TryAddItem(InventoryItemSO inventoryItemSO, int amount) {
+    public bool TryAddItem(InventoryItemSO inventoryItemSO, int amount = 1) {
         stackLimit = !inventoryItemSO.isStackable ? 1 : stackLimit; 
 
         if (!CanAddItem(inventoryItemSO, amount)) {
@@ -44,11 +61,13 @@ public class InventorySystem : Singleton<InventorySystem>
         if(item != null) {
             int newItemAmount = item.GetAmount() + amount;
             item.SetAmount(newItemAmount);
+
             if(item.GetAmount() > stackLimit) {
                 int leftOver = newItemAmount - stackLimit;
                 item.SetAmount(stackLimit);
                 TryAddItem(item.GetItemSO(), leftOver);
             }
+
             InventorySlot slotToUpdate = itemSlotDictionary.First(itemSlotPair => itemSlotPair.Value == item).Key;
             slotToUpdate.UpdateSlot();
         } else {
@@ -69,6 +88,42 @@ public class InventorySystem : Singleton<InventorySystem>
         return true;
     }
 
+    public void RemoveItem(InventoryItemSO itemSO, int amount = 1, InventorySlot start = null) {
+        bool IsSlotWithSO(InventorySlot slot) {
+            return itemSlotDictionary[slot] != null && slot != start && itemSlotDictionary[slot].GetItemSO() == itemSO;
+        }
+
+        List<InventorySlot> slotsWithItem = inventorySlots.Where(IsSlotWithSO).ToList();
+
+        if(start != null && itemSlotDictionary[start].GetItemSO() == itemSO)
+            slotsWithItem.Prepend(start);
+
+        if(slotsWithItem.Count == 0) return;
+        int amountLeftToRemove = amount;
+
+
+        foreach(var slot in slotsWithItem) {
+            InventoryItem item = itemSlotDictionary[slot];
+            int itemAmount = item.GetAmount();
+
+            if (itemAmount > amountLeftToRemove) {
+                item.SetAmount(itemAmount-amountLeftToRemove);
+                slot.UpdateSlot();
+                break;
+            } else {
+                itemSlotDictionary[slot] = null;
+                amountLeftToRemove -= itemAmount;
+            }
+
+            slot.UpdateSlot();
+        }
+
+        slotsWithItem = inventorySlots.Where(slot => itemSlotDictionary[slot] != null && itemSlotDictionary[slot].GetItemSO() == itemSO).ToList();
+        if (slotsWithItem.Count == 0) {
+            OnAnyItemRemoved?.Invoke(itemSO);
+        }
+    }
+
     private bool CanAddItem(InventoryItemSO inventoryItemSO, int amount = 1) {
         int avaiableSpace = 0;
         foreach(var item in itemSlotDictionary.Values.ToList()) {
@@ -87,8 +142,6 @@ public class InventorySystem : Singleton<InventorySystem>
 
         return avaiableSpace >= amount;
     }
-
-    public bool TryAddItem(InventoryItemSO inventoryItemSO) => TryAddItem(inventoryItemSO, 1);
 
 
 

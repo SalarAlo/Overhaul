@@ -8,7 +8,7 @@ public class SeedBagItemUsable : TimedItemUsable
     [SerializeField] private SeedBagItemSO seedSO;
     private List<TileObject> selectedTiles = new List<TileObject>();
 
-    protected override void DefineOnModeEnabled(UsableInventoryItemSO so){
+    protected override void OnModeEnabled(UsableInventoryItemSO so){
         seedSO = so as SeedBagItemSO;
     }
 
@@ -24,13 +24,13 @@ public class SeedBagItemUsable : TimedItemUsable
         ) / selectedTiles.Count + new Vector3(0, 1, 0);
     }
 
-    protected override void OnTimerFinished()
-    {
+    protected override void OnTimerFinished() {
         foreach(TileObject tile in selectedTiles) {
             if(tile is not Soil soilTile) continue;
             if(soilTile.IsOccupied()) continue;
 
             soilTile.PlantSeed(seedSO);
+            InventorySystem.Instance.RemoveItem(seedSO);
         }
     }
 

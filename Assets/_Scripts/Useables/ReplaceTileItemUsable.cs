@@ -9,7 +9,7 @@ public abstract class ReplaceTileItemUsable : ItemModeUsable
 {
     [SerializeField] private TileObject outcomeTile;
     [SerializeField] private List<TypeReference> validGroundTiles;
-    public override void DefineDuringModeEnabled() {
+    public override void DuringModeEnabled() {
         if(!Input.GetMouseButton(0)) return;
 
         List<TileObject> selectedTiles = SelectedTileIndicator.Instance.GetSelectedTiles();
@@ -20,5 +20,5 @@ public abstract class ReplaceTileItemUsable : ItemModeUsable
         }
     }
 
-    protected override abstract void DefineOnModeEnabled(UsableInventoryItemSO so);
+    protected override abstract void OnModeEnabled(UsableInventoryItemSO so);
 }

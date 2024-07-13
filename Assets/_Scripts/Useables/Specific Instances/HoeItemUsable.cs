@@ -20,7 +20,7 @@ public class HoeItemUsable : TimedItemUsable
         return !tileObjects.Any(tile => tile is Grass grassTile && !grassTile.HasStructurePlaced()); 
     }
 
-    protected override void DefineOnModeEnabled(UsableInventoryItemSO so) {
+    protected override void OnModeEnabled(UsableInventoryItemSO so) {
     }
 
     protected override float GetActionDuration() {
