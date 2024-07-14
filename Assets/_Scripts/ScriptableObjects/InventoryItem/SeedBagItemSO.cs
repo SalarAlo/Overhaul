@@ -5,10 +5,14 @@ using UnityEngine;
 public class SeedBagItemSO : UsableInventoryItemSO
 {
     public List<GameObject> stages;
-    public int baseGrowthValue;
-    public int basePesticideProtection;
+    public InventoryItemSO outcomePlant;
+    [Range(0, 20)] public int baseGrowthValue;
+    [Range(0, 20)] public int basePesticideProtection;
     [Range(0, 100)] public int basePesticideSpawnRate;
-    public int baseWaterDemand;
-    public int baseSunDemand;
-    public int baseQuantity;
+    [Range(0, 100)] public int seedDropRate;
+    [Range(1, 20)] public int baseWaterDemand;
+    [Range(1, 20)] public int baseSunDemand;
+    [Range(1, 20)] public int baseQuantity;
+    public int randomSeedDropMax;
+
 }

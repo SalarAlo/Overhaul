@@ -429,6 +429,7 @@
 "Assets/_Scripts/Useables/ReplaceTileItemUsable.cs"
 "Assets/_Scripts/Useables/Specific Instances/HoeItemUsable.cs"
 "Assets/_Scripts/Useables/Specific Instances/SeedBagItemUsable.cs"
+"Assets/_Scripts/Useables/Specific Instances/SenseItemUsable.cs"
 "Assets/_Scripts/Useables/TimedItemUsable.cs"
 -langversion:9.0
 

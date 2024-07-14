@@ -22,6 +22,22 @@ public class Soil : RoundedTileObject<Soil>
         randomRotation = Quaternion.Euler(0, UnityEngine.Random.Range(0, 359), 0);
     }
 
+
+    public bool CanHarvest() => readyToHarvest;
+    public void Harvest() {
+        if(!CanHarvest()) return;   
+        Destroy(plantParent.GetChild(0).gameObject);
+        growing = false;
+        currentStage = -1;
+        readyToHarvest = false;
+        timeBeforeNextStage = 0;
+        InventorySystem.Instance.TryAddItem(currentSeed.outcomePlant, OverhaulFormulas.GetQuantity(currentSeed));   
+        if(UnityEngine.Random.Range(1, 100) < currentSeed.seedDropRate)
+            InventorySystem.Instance.TryAddItem(currentSeed, UnityEngine.Random.Range(1, currentSeed.randomSeedDropMax+1));
+        
+        currentSeed = null;
+    }
+
     public void PlantSeed(SeedBagItemSO seedBagItemSO) {
         currentSeed = seedBagItemSO;
         StartGrowing();
@@ -48,8 +64,6 @@ public class Soil : RoundedTileObject<Soil>
     }
 
     private void GrowToCurrentStage() {
-        int randomSecondsOffset = 20;
-
         foreach(Transform child in plantParent) Destroy(child.gameObject);
 
         Instantiate(
@@ -63,7 +77,7 @@ public class Soil : RoundedTileObject<Soil>
             EndGrowingProcess();
         }
 
-        timeBeforeNextStage = OverhaulFormulas.GetStageDuration(currentSeed.baseGrowthValue, currentStage) + UnityEngine.Random.Range(0, randomSecondsOffset);
+        timeBeforeNextStage = OverhaulFormulas.GetStageDuration(currentSeed.baseGrowthValue, currentStage);
         timeBeforeNextStageCounter = 0;
 
     }
