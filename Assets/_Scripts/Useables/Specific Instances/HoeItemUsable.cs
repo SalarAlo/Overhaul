@@ -17,7 +17,8 @@ public class HoeItemUsable : TimedItemUsable
             return true;
         }
 
-        return !tileObjects.Any(tile => tile is Grass grassTile && !grassTile.HasStructurePlaced()); 
+
+        return !tileObjects.Any(tile => tile is Grass grassTile && !grassTile.HasBlockStructurePlaced()); 
     }
 
     protected override void OnModeEnabled(UsableInventoryItemSO so) {

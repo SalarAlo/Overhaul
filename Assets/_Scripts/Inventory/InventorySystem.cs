@@ -163,6 +163,17 @@ public class InventorySystem : Singleton<InventorySystem>
     public InventoryItem GetItemOnSlot(InventorySlot inventorySlot) {
         return itemSlotDictionary[inventorySlot];
     }
+
+    public int GetAmount(InventoryItemSO inventoryItemSO){
+        return inventorySlots.Aggregate(
+            0, 
+            (accu, slot) => 
+                itemSlotDictionary[slot] != null && 
+                itemSlotDictionary[slot].GetItemSO() == inventoryItemSO ? 
+                    accu + itemSlotDictionary[slot].GetAmount() : 
+                    accu
+        );
+    }
 }
 
 [Serializable]

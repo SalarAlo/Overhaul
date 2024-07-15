@@ -17,7 +17,6 @@ public class SenseItemUsable : ItemModeUsable
             ToList().
             Select(tile => tile as Soil).
             ToList();
-
         foreach(Soil harvestableSoilTile in harvestableSoilTiles) {
             harvestableSoilTile.Harvest();
         }

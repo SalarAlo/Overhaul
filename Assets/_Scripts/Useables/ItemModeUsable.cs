@@ -13,7 +13,6 @@ public abstract class ItemModeUsable : ItemUsable
         ItemModeUsable currentMode = ModeUseableSystem.Instance.GetCurrentlySelectedModeUsable();
 
         if(currentMode == null || currentMode.GetType() != GetType()) {
-            Debug.Log("Setting mode to false");
             modeIsEnabled = false;
             return;
         }

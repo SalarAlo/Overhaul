@@ -22,11 +22,11 @@ MonoBehaviour:
   - {fileID: 6607827713916394044, guid: 3d2f8640ed1222948a096707555a6300, type: 3}
   - {fileID: 2285536562573392136, guid: 42b4e88685d303047a95fc240912d1d4, type: 3}
   outcomePlant: {fileID: 11400000, guid: 47896415def688748b35c58391b8bff2, type: 2}
-  baseGrowthValue: 20
+  baseGrowthValue: 10
   basePesticideProtection: 17
   basePesticideSpawnRate: 30
-  seedDropRate: 60
+  seedDropRate: 10
   baseWaterDemand: 4
   baseSunDemand: 2
-  baseQuantity: 15
+  baseQuantity: 5
   randomSeedDropMax: 3

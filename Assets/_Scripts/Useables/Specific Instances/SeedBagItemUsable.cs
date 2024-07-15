@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using TreeEditor;
 using UnityEngine;
 
 public class SeedBagItemUsable : TimedItemUsable
@@ -44,6 +45,14 @@ public class SeedBagItemUsable : TimedItemUsable
             return true;
         }
 
-        return !tileObjects.Any(tile => tile is Soil soilTile && !soilTile.IsOccupied()); 
+        int amountOfSoilToPlant = tileObjects.Aggregate(0, (accu, t) => t is Soil soil && !soil.IsOccupied() ? accu+1 : accu);
+        bool notEnoughSeeds = amountOfSoilToPlant > InventorySystem.Instance.GetAmount(seedSO); 
+
+        if (notEnoughSeeds) {
+            return true;
+        }
+        bool anySoilWhichCanBePlanted = !tileObjects.Any(tile => tile is Soil soilTile && !soilTile.IsOccupied()); 
+
+        return anySoilWhichCanBePlanted; 
     }
 }

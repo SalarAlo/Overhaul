@@ -7,7 +7,7 @@ using UnityEngine;
 public class SelectedTileIndicator : Singleton<SelectedTileIndicator>
 {
     [SerializeField] private float speed;
-    [SerializeField] private int size;
+    [SerializeField] private int sizeIndicator;
     private List<TileObject> tileObjectsSelected = null;
     private SpriteRenderer spriteRenderer; 
     private Vector3 destinationPos;
@@ -16,13 +16,11 @@ public class SelectedTileIndicator : Singleton<SelectedTileIndicator>
         base.Awake();
         spriteRenderer = GetComponent<SpriteRenderer>();
         tileObjectsSelected = new List<TileObject>();
-        SetSize(size);
+        SetSize(sizeIndicator);
     }
 
-
-
     private void SetSize(int size) { 
-        this.size = size;
+        this.sizeIndicator = size;
         spriteRenderer.size = new(size, size);
     }
 
@@ -38,9 +36,9 @@ public class SelectedTileIndicator : Singleton<SelectedTileIndicator>
             Vector3.Lerp(
                 transform.position,
                 destinationPos + new Vector3(
-                    (size-1)*.5f, 
+                    (sizeIndicator-1)*.5f, 
                     .25f,
-                    (size-1) * .5f
+                    (sizeIndicator-1) * .5f
                 ),
                 speed * Time.deltaTime
             );
@@ -56,11 +54,11 @@ public class SelectedTileIndicator : Singleton<SelectedTileIndicator>
 
         if(!hit.transform.TryGetComponent(out TileObject tileObject)) return;
         Vector2Int coord = tileObject.GetLocalPosition();
-        if(coord.x == 0 || coord.y == 0 || coord.x >= TileManager.Instance.GetSizeX() || coord.y >= TileManager.Instance.GetSizeY()) return;
+
         tileObjectsSelected.Clear();
 
-        for(int y = 0; y < size; y++) {
-            for(int x = 0; x < size; x++) {
+        for(int y = 0; y < sizeIndicator; y++) {
+            for(int x = 0; x < sizeIndicator; x++) {
                 tileObjectsSelected.Add(TileManager.Instance.GetTile(
                     tileObject.GetLocalPosition().x+x,
                     tileObject.GetLocalPosition().y+y

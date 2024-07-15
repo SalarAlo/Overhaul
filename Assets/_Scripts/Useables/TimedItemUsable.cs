@@ -10,11 +10,9 @@ public abstract class TimedItemUsable : ItemModeUsable
     private ProgressBarUI progressBarUI;
 
     public override void DuringModeEnabled(){
-        Debug.Log("still active");
         if(!Input.GetMouseButton(0) || ShouldCancelCounter()) {
             counter = 0;
             if(progressBarUI != null) Destroy(progressBarUI.gameObject);
-            Debug.Log("Destroyed becouse mouse btn isnt pressed or additional check");
             return;
         }
 

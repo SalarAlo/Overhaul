@@ -11,7 +11,7 @@ public class CameraSystem : MonoBehaviour
     [SerializeField] private float rotationSpeed;
     [SerializeField] private CinemachineVirtualCamera cinemachineVirtualCamera;
 
-    private float yMin = 2;
+    private float yMin = 3.5f;
     private float yMax = 7;
 
     private void Update() {
