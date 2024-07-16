@@ -417,6 +417,7 @@
 "Assets/_Scripts/ScriptableObjects/InventoryItem/SeedBagItemSO.cs"
 "Assets/_Scripts/ScriptableObjects/InventoryItem/UsableInventoryItemSO.cs"
 "Assets/_Scripts/Tile/Grass.cs"
+"Assets/_Scripts/Tile/Plot.cs"
 "Assets/_Scripts/Tile/RoundedTileObject.cs"
 "Assets/_Scripts/Tile/SelectedTileIndicator.cs"
 "Assets/_Scripts/Tile/Soil.cs"

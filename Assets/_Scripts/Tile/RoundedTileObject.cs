@@ -17,8 +17,8 @@ public abstract class RoundedTileObject<T> : TileObject where T : RoundedTileObj
     }
 
     public void AdjustTextureBasedOnNeighbors() {       
-        int x = localCoordinates.x;
-        int y = localCoordinates.y;
+        int x = coordinates.x;
+        int y = coordinates.y;
 
         bool top = IsOfSameType(x, y + 1);
         bool bottom = IsOfSameType(x, y - 1);
@@ -82,10 +82,10 @@ public abstract class RoundedTileObject<T> : TileObject where T : RoundedTileObj
 
     private void AdjustNeighbours() {
         List<RoundedTileObject<T>> neighbours = new List<RoundedTileObject<T>>() {
-            TileManager.Instance.GetTile(localCoordinates.x + 1, localCoordinates.y) as T,
-            TileManager.Instance.GetTile(localCoordinates.x - 1, localCoordinates.y) as T,
-            TileManager.Instance.GetTile(localCoordinates.x, localCoordinates.y - 1) as T,
-            TileManager.Instance.GetTile(localCoordinates.x, localCoordinates.y + 1) as T,
+            TileManager.Instance.GetTileInUnlockedPlots(coordinates.x + 1, coordinates.y) as T,
+            TileManager.Instance.GetTileInUnlockedPlots(coordinates.x - 1, coordinates.y) as T,
+            TileManager.Instance.GetTileInUnlockedPlots(coordinates.x, coordinates.y - 1) as T,
+            TileManager.Instance.GetTileInUnlockedPlots(coordinates.x, coordinates.y + 1) as T,
         };
 
         neighbours
@@ -96,7 +96,7 @@ public abstract class RoundedTileObject<T> : TileObject where T : RoundedTileObj
     }
 
     private bool IsOfSameType(int x, int y) {
-        TileObject tile = TileManager.Instance.GetTile(x, y);
+        TileObject tile = TileManager.Instance.GetTileInUnlockedPlots(x, y);
         return tile != null && tile is T;
     }
 }

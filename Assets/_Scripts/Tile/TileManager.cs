@@ -1,76 +1,88 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
 using UnityEngine;
+using UnityEngine.Timeline;
 
 public class TileManager : Singleton<TileManager>
 {
-    [SerializeField] private int sizeX;
-    [SerializeField] private int sizeY;
-    [SerializeField] private int maxSizeX;
-    [SerializeField] private int maxSizeY;
-    [SerializeField] private int tileSize = 1;
-
+    // TODO: Better declaration for world pos var x and y and local pos var x and y
+    [SerializeField] private Plot plotPrefab;
     [SerializeField] private Grass grassPrefab;
-    private Dictionary<Vector2Int, TileObject> unlockedTileObjects;
-    private Dictionary<Vector2Int, TileObject> allTileObjects;
-
     [SerializeField] private GameObject fence;
 
+    private int plotsX = 5;
+    private int plotsY = 5;
+
+    private List<Plot> unlockedPlots;
+    private List<Plot> allPlots;
 
     public override void Awake() {
         base.Awake();
-        unlockedTileObjects = new Dictionary<Vector2Int, TileObject>();
-        allTileObjects = new Dictionary<Vector2Int, TileObject>();
 
-        CreateAllTileObjects();
-        PopulateUnlockedTileObjects();
+        unlockedPlots = new List<Plot>();
+        allPlots = new List<Plot>();
+
+        CreatePlots();
+        OccupyMiddlePlot();
         CreateFenceSurrounding();
     }
 
+    private void CreatePlots(){
+        for(int y = 0; y < plotsY; y++){
+            for(int x = 0; x < plotsX; x++) {
+                allPlots.Add(
+                    Instantiate(plotPrefab, new(x*Plot.GetSinglePlotSize(), 0, y*Plot.GetSinglePlotSize()), Quaternion.identity, transform)
+                );
+                allPlots[^1].Initialize(x, y);
+            }
+        }
+    }
+
     public void ReplaceTile(int x, int y, TileObject newTileObj) {
-        Destroy(unlockedTileObjects[new (y, x)].gameObject);
-        newTileObj.SetCoordinates(x, y);
-        unlockedTileObjects[new (y, x)] = newTileObj;
+        int localX = x % Plot.GetSinglePlotSize();
+        int localY = y % Plot.GetSinglePlotSize();
+
+        Plot plot = allPlots.Find(plot => plot.ContainsTile(x, y));
+
+        plot.ReplaceTile(localX, localY, newTileObj);
     }
 
-    private void CreateAllTileObjects() {
-        for(int y = 0; y <= maxSizeX; y++){
-            for(int x = 0; x <= maxSizeY; x++) {
-                TileObject tileObject = Instantiate(grassPrefab, new Vector3(x*tileSize, 0, y*tileSize), Quaternion.identity, transform);
-                tileObject.transform.localScale = new Vector3(tileSize, .1f, tileSize);
-                tileObject.SetCoordinates(x, y);
-                allTileObjects[tileObject.GetLocalPosition()] = tileObject;
-            }
-        }
+    public TileObject CreateTileObject(int x, int y, Transform parent) {
+        TileObject tileObject = Instantiate(grassPrefab, parent);
+        tileObject.transform.localScale = new Vector3(1, .1f, 1);
+        tileObject.SetCoordinates(x, y);
+        return tileObject;
     }
 
-    private void PopulateUnlockedTileObjects() {
-        int yOff = Mathf.FloorToInt((maxSizeY - sizeY) / 2);
-        int xOff = Mathf.FloorToInt((maxSizeX - sizeX) / 2);
-
-
-        for(int y = yOff; y <= sizeY - yOff; y++) {
-            for(int x = xOff; x <= sizeX - xOff; x++) {
-                unlockedTileObjects[new(y, x)] = allTileObjects[new(y, x)];
-                unlockedTileObjects[new(y, x)].DebugMark();
-            }
-        }
+    private void OccupyMiddlePlot() {
+        unlockedPlots.Add(
+            allPlots.Find((p) => p.GetLocalCoordinates().x == plotsX/2 && p.GetLocalCoordinates().y == plotsY/2)
+        );
     }
 
     private void CreateFenceSurrounding() {
-        foreach (var keyValuePair in unlockedTileObjects) {
-            Vector2Int coord = keyValuePair.Key;
+        foreach (var keyValuePair in unlockedPlots) {
 
         }
     }
 
+    public TileObject GetTileInUnlockedPlots(int x, int y)  {
+        var plot =  unlockedPlots.Find(
+            plot => plot.ContainsTile(x, y)
+        );
 
+        if(plot == null) return null;
 
-    public TileObject GetTile(int x, int y)  {
-        int yOff = Mathf.FloorToInt((maxSizeY - sizeY) / 2);
-        int xOff = Mathf.FloorToInt((maxSizeX - sizeX) / 2);
-        if (x < xOff || x >= sizeX+1 || y < yOff || y >= sizeY+1) return null;
-        return unlockedTileObjects[new(y, x)];
+        int localX = x % Plot.GetSinglePlotSize();
+        int localY = y % Plot.GetSinglePlotSize();
+        return plot.GetTile(localX, localY);
     }
-    public int GetSizeX() => sizeX;
-    public int GetSizeY() => sizeY;
+
+    public TileObject GetTile(int x, int y) {
+        int localX = x % Plot.GetSinglePlotSize();
+        int localY = y % Plot.GetSinglePlotSize();
+        return allPlots.Find(p => p.ContainsTile(x, y)).GetTile(localX, localY);
+    }
 }

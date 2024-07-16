@@ -71,6 +71,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   localCoordinates: {x: 0, y: 0}
   coordText: {fileID: 1336036644311130430}
+  marked: {fileID: 2100000, guid: 2a0abf8178c266f43a6bc110dd9d07ba, type: 2}
+  meshRenderer: {fileID: 7037188541327154638}
   structureParent: {fileID: 8994498241497886647}
 --- !u!1 &6611704179498952996
 GameObject:

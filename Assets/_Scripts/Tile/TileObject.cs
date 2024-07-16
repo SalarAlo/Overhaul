@@ -7,11 +7,13 @@ using UnityEngine;
 public class TileObject : MonoBehaviour
 {
     private static bool debugEnabled = false;
-    [SerializeField] protected Vector2Int localCoordinates;
+    [SerializeField] protected Vector2Int coordinates;
     [SerializeField] private TextMeshPro coordText;
+    [SerializeField] private Material marked;
+    [SerializeField] private MeshRenderer meshRenderer;
 
     public void SetCoordinates(int x, int y) {
-        localCoordinates = new(x, y);
+        coordinates = new(x, y);
         if(debugEnabled) {
             coordText.text = $"({x}, {y})";
         } else {
@@ -25,12 +27,13 @@ public class TileObject : MonoBehaviour
         Vector3 offset = (Vector3)offsetNullable;
 
         TileObject tile = MonoBehaviour.Instantiate(newTilePrefab, transform.position + offset, Quaternion.identity, transform.parent);
-        TileManager.Instance.ReplaceTile(localCoordinates.x, localCoordinates.y, tile);
+        TileManager.Instance.ReplaceTile(coordinates.x, coordinates.y, tile);
     }
 
     public void DebugMark() {
         //TODO: MARK RED
+        meshRenderer.material = marked;
     }
 
-    public Vector2Int GetLocalPosition() => localCoordinates;
+    public Vector2Int GetCoordinates() => coordinates;
 }

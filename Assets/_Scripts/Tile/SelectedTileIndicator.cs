@@ -53,15 +53,14 @@ public class SelectedTileIndicator : Singleton<SelectedTileIndicator>
         if(!hitSomething) return;
 
         if(!hit.transform.TryGetComponent(out TileObject tileObject)) return;
-        Vector2Int coord = tileObject.GetLocalPosition();
 
         tileObjectsSelected.Clear();
 
         for(int y = 0; y < sizeIndicator; y++) {
             for(int x = 0; x < sizeIndicator; x++) {
-                tileObjectsSelected.Add(TileManager.Instance.GetTile(
-                    tileObject.GetLocalPosition().x+x,
-                    tileObject.GetLocalPosition().y+y
+                tileObjectsSelected.Add(TileManager.Instance.GetTileInUnlockedPlots(
+                    tileObject.GetCoordinates().x+x,
+                    tileObject.GetCoordinates().y+y
                 ));
             }
         }
