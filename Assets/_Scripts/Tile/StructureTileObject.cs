@@ -4,10 +4,10 @@ public class StructureTileObject : TileObject
 {
     [SerializeField] private Transform structureParent;
     private GameObject currentStructure;
-    private bool currentStructureIsBlockStructure;
+    private bool currentStructureIsBlocking;
 
-    public void PlaceStructure(GameObject structurePrefab, bool blockStructure, Vector3? offset = null, Quaternion? rotation = null) {
-        currentStructureIsBlockStructure = blockStructure;
+    public void PlaceStructure(GameObject structurePrefab, bool blockingStructure, Vector3? offset = null, Quaternion? rotation = null) {
+        currentStructureIsBlocking = blockingStructure;
         if(currentStructure != null) Destroy(currentStructure);
         currentStructure = Instantiate(structurePrefab, structureParent);
 
@@ -20,5 +20,5 @@ public class StructureTileObject : TileObject
     }
 
     public bool HasStructurePlaced() => currentStructure != null;
-    public bool HasBlockStructurePlaced() => currentStructureIsBlockStructure && currentStructure != null;
+    public bool HasBlockStructurePlaced() => currentStructureIsBlocking && currentStructure != null;
 }

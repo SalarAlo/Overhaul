@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -11,8 +12,10 @@ public class TileObject : MonoBehaviour
     [SerializeField] private TextMeshPro coordText;
     [SerializeField] private Material marked;
     [SerializeField] private MeshRenderer meshRenderer;
+    private Plot plot;
 
-    public void SetCoordinates(int x, int y) {
+    public void Initialize(int x, int y, Plot plot) {
+        this.plot = plot;
         coordinates = new(x, y);
         if(debugEnabled) {
             coordText.text = $"({x}, {y})";
@@ -31,9 +34,25 @@ public class TileObject : MonoBehaviour
     }
 
     public void DebugMark() {
-        //TODO: MARK RED
         meshRenderer.material = marked;
     }
 
     public Vector2Int GetCoordinates() => coordinates;
+
+    public bool AllNeighboursInPlot() {
+        List<Vector2Int> neighbours = new List<Vector2Int>() {
+            GetCoordinates() + Vector2Int.down,
+            GetCoordinates() + Vector2Int.up,
+            GetCoordinates() + Vector2Int.left,
+            GetCoordinates() + Vector2Int.right,
+        };
+
+        foreach(Vector2Int neighbourCoord in neighbours) {
+            if(!plot.ContainsTile(neighbourCoord.x, neighbourCoord.y))  {
+                return false;
+            }
+        }
+
+        return true;
+    }
 }

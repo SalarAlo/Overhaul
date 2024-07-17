@@ -2800,7 +2800,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c35721ce0836b444ba2b4395e6586cb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  plotPrefab: {fileID: 0}
+  plotPrefab: {fileID: 6437300655341419160, guid: b091f9624b200984181e5bd092795d03, type: 3}
   grassPrefab: {fileID: 7139848682766136928, guid: 798bcd0b8d643ae43880d7cc015e7033, type: 3}
   fence: {fileID: 3762998159294160545, guid: e5212eb01de1c8743a9aa661214c42a7, type: 3}
 --- !u!4 &561895787 stripped
@@ -4441,8 +4441,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.22975291, y: -0.0000000187227, z: 0.0000000044198294, w: 0.973249}
-  m_LocalPosition: {x: 0, y: 3.5, z: -7}
+  m_LocalRotation: {x: 0.3444773, y: -0, z: -0, w: 0.9387947}
+  m_LocalPosition: {x: 0, y: 5.936386, z: -7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -9173,8 +9173,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1908922591}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.22975291, y: -0.0000000187227, z: 0.0000000044198294, w: 0.973249}
-  m_LocalPosition: {x: 0, y: 3.5, z: -7}
+  m_LocalRotation: {x: 0.3444773, y: -0, z: -0, w: 0.9387947}
+  m_LocalPosition: {x: 0, y: 5.936386, z: -7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -9729,6 +9729,10 @@ PrefabInstance:
     - target: {fileID: 3749330814619773794, guid: 8250596f4c412d3419b71a99a97aa868, type: 3}
       propertyPath: m_Name
       value: Farm House
+      objectReference: {fileID: 0}
+    - target: {fileID: 3749330814619773794, guid: 8250596f4c412d3419b71a99a97aa868, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4558658970493268440, guid: 8250596f4c412d3419b71a99a97aa868, type: 3}
       propertyPath: m_LocalPosition.x
@@ -10375,7 +10379,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 1
-  m_FollowOffset: {x: 0, y: 3.5, z: -7}
+  m_FollowOffset: {x: 0, y: 5.936386, z: -7}
   m_XDamping: 0.1
   m_YDamping: 0.1
   m_ZDamping: 0

@@ -49,10 +49,10 @@ public class TileManager : Singleton<TileManager>
         plot.ReplaceTile(localX, localY, newTileObj);
     }
 
-    public TileObject CreateTileObject(int x, int y, Transform parent) {
-        TileObject tileObject = Instantiate(grassPrefab, parent);
+    public TileObject CreateTileObject(int x, int y, Plot plot) {
+        TileObject tileObject = Instantiate(grassPrefab, plot.transform);
         tileObject.transform.localScale = new Vector3(1, .1f, 1);
-        tileObject.SetCoordinates(x, y);
+        tileObject.Initialize(x, y, plot);
         return tileObject;
     }
 
@@ -63,8 +63,34 @@ public class TileManager : Singleton<TileManager>
     }
 
     private void CreateFenceSurrounding() {
-        foreach (var keyValuePair in unlockedPlots) {
+        foreach (var plot in unlockedPlots) {
+            foreach(TileObject tile in plot.GetAllTiles()){
+                Vector2Int tileCoordinates = tile.GetCoordinates();
+                List<Vector2Int> neighbourCoordinates = new() {
+                    tileCoordinates+Vector2Int.up,
+                    tileCoordinates+Vector2Int.down,
+                    tileCoordinates+Vector2Int.left,
+                    tileCoordinates+Vector2Int.right
+                };
 
+                List<Vector2Int> positionsFenceRequired = new();
+
+                foreach(Vector2Int neighbourCoordinate in neighbourCoordinates) 
+                    if(GetTileInUnlockedPlots(neighbourCoordinate.x, neighbourCoordinate.y) == null)
+                        positionsFenceRequired.Add(neighbourCoordinate);
+                
+                if(positionsFenceRequired.Count == 0) continue;
+
+                foreach(Vector2Int positionFenceRequired in positionsFenceRequired) {
+                    StructureTileObject tileFenceRequired = GetTile(positionFenceRequired.x, positionFenceRequired.y) as StructureTileObject;
+                    tileFenceRequired.PlaceStructure(
+                        fence, 
+                        false, 
+                        null, 
+                        positionFenceRequired.x == tileCoordinates.x ? null : Quaternion.Euler(0, 90, 0)
+                    );
+                }
+            }
         }
     }
 

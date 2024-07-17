@@ -15,7 +15,7 @@ public class Plot : MonoBehaviour
         localCoords = new(localX, loxalY);
         for(int y = 0; y < GetSinglePlotSize(); y++) {
             for(int x = 0; x < GetSinglePlotSize(); x++) {
-                tileObjects[x, y] = TileManager.Instance.CreateTileObject(x + localX*GetSinglePlotSize(), y + loxalY*GetSinglePlotSize(), transform);
+                tileObjects[x, y] = TileManager.Instance.CreateTileObject(x + localX*GetSinglePlotSize(), y + loxalY*GetSinglePlotSize(), this);
                 tileObjects[x, y].transform.localPosition = new(x, 0, y);
             }
         }
@@ -38,7 +38,11 @@ public class Plot : MonoBehaviour
 
     public void ReplaceTile(int x, int y, TileObject newTileObj) {
         Destroy(tileObjects[x, y].gameObject);
-        newTileObj.SetCoordinates(x, y);
+        newTileObj.Initialize(x, y, this);
         tileObjects[x, y] = newTileObj;
+    }
+
+    public TileObject[,] GetAllTiles(){
+        return tileObjects;
     }
 }
