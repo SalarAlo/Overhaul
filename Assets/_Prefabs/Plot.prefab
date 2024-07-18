@@ -44,3 +44,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7c34064ed1c2694f8af50cbc5c2b85e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buyIndicatorPrefab: {fileID: -7227169404166988396, guid: c5273f0af5cfeb746b1c6046a9124e44, type: 3}

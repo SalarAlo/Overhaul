@@ -40,19 +40,28 @@ public class TileObject : MonoBehaviour
     public Vector2Int GetCoordinates() => coordinates;
 
     public bool AllNeighboursInPlot() {
-        List<Vector2Int> neighbours = new List<Vector2Int>() {
+        return GetAllNeighbourPositionsNotInPlot().Count == 0;
+    }
+
+    public List<Vector2Int> GetAllNeighbourPositionsNotInPlot() {
+        List<Vector2Int> neighbourCoordinates = new List<Vector2Int>();
+
+        foreach(Vector2Int neighbourCoordinate in GetNeighboorPositions()) {
+            if(!plot.ContainsTile(neighbourCoordinate.x, neighbourCoordinate.y))  {
+                neighbourCoordinates.Add(neighbourCoordinate);
+            }
+        }
+
+        return neighbourCoordinates;
+    } 
+    public List<Vector2Int> GetNeighboorPositions() {
+        List<Vector2Int> neighbourCoordinates = new List<Vector2Int>() {
             GetCoordinates() + Vector2Int.down,
             GetCoordinates() + Vector2Int.up,
             GetCoordinates() + Vector2Int.left,
             GetCoordinates() + Vector2Int.right,
         };
 
-        foreach(Vector2Int neighbourCoord in neighbours) {
-            if(!plot.ContainsTile(neighbourCoord.x, neighbourCoord.y))  {
-                return false;
-            }
-        }
-
-        return true;
+        return neighbourCoordinates;
     }
 }

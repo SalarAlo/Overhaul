@@ -6,7 +6,7 @@ public class StructureTileObject : TileObject
     private GameObject currentStructure;
     private bool currentStructureIsBlocking;
 
-    public void PlaceStructure(GameObject structurePrefab, bool blockingStructure, Vector3? offset = null, Quaternion? rotation = null) {
+    public GameObject PlaceStructure(GameObject structurePrefab, bool blockingStructure, Vector3? offset = null, Quaternion? rotation = null) {
         currentStructureIsBlocking = blockingStructure;
         if(currentStructure != null) Destroy(currentStructure);
         currentStructure = Instantiate(structurePrefab, structureParent);
@@ -17,6 +17,14 @@ public class StructureTileObject : TileObject
         if(offset != null) {
             transform.position += (Vector3)offset;
         }
+        return currentStructure;
+    }
+
+    public void RemovePlacedStructure(){
+        if(currentStructure == null) return;
+        Destroy(currentStructure);
+        currentStructureIsBlocking = false;
+        currentStructure = null;
     }
 
     public bool HasStructurePlaced() => currentStructure != null;
